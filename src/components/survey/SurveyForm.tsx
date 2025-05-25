@@ -18,7 +18,6 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
     examPreparationDevice: '',
     podcastExamPrepPossible: '',
     podcastExamPrepWhyNot: '',
-    podcastExperience: '',
     podcastHelpful: '',
     podcastHelpfulWhyNot: '',
     voicesFeedback: '',
@@ -47,7 +46,6 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         had_paid_subscription: formData.hadPaidSubscription,
         subscription_amount: formData.subscriptionAmount,
         exam_preparation_device: formData.examPreparationDevice,
-        podcast_experience: formData.podcastExperience,
         podcast_helpful: formData.podcastHelpful,
         voices_feedback: formData.voicesFeedback,
         only_male_or_female_voices: formData.onlyMaleOrFemaleVoices,
@@ -72,7 +70,6 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         examPreparationDevice: '',
         podcastExamPrepPossible: '',
         podcastExamPrepWhyNot: '',
-        podcastExperience: '',
         podcastHelpful: '',
         podcastHelpfulWhyNot: '',
         voicesFeedback: '',
@@ -188,14 +185,6 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
             <textarea value={formData.podcastExamPrepWhyNot} onChange={e => setFormData({ ...formData, podcastExamPrepWhyNot: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
           </div>
         )}
-        {/* 5. Podcast-Erfahrung bleibt */}
-        <div>
-          <label className="block text-base font-medium text-gray-800 mb-2">
-            Hast du schon einmal mit Podcasts oder Audioinhalten für die Uni gelernt? Wenn ja: wie war das für dich?
-          </label>
-          <textarea value={formData.podcastExperience} onChange={e => setFormData({ ...formData, podcastExperience: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
-        </div>
-        {/* 6. ENTFÄLLT */}
         {/* 7. Denk an dein letztes Prüfungsfach: Ja/Nein, Folgefrage bei Nein */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
