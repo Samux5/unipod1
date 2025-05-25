@@ -12,20 +12,23 @@ interface SurveyFormProps {
 
 export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle }) => {
   const [formData, setFormData] = useState({
-    usedPlatforms: '', // 1
-    hadPaidSubscription: '', // 2
-    subscriptionAmount: '', // 3
-    examPreparation: '', // 4
-    podcastExperience: '', // 5
-    audioUsage: '', // 6
-    podcastHelpful: '', // 7
-    voicesFeedback: '', // 8
-    onlyMaleOrFemaleVoices: '', // 9
-    whyNotVoices: '', // 10
-    genderImportance: '5', // 11
-    podcastExamPrep: '5', // 12
-    paidSubscriptionPossible: '5', // 13
-    willingToPay: '', // 14
+    usedPlatforms: '',
+    hadPaidSubscription: '',
+    subscriptionAmount: '',
+    examPreparationDevice: '',
+    podcastExamPrepPossible: '',
+    podcastExamPrepWhyNot: '',
+    podcastExperience: '',
+    podcastHelpful: '',
+    podcastHelpfulWhyNot: '',
+    voicesFeedback: '',
+    voicesFeedbackWhyNot: '',
+    onlyMaleOrFemaleVoices: '',
+    whyNotVoices: '',
+    genderImportance: '5',
+    podcastExamPrep: '5',
+    paidSubscriptionPossible: '5',
+    willingToPay: '',
     email: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,9 +46,8 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         used_platforms: formData.usedPlatforms,
         had_paid_subscription: formData.hadPaidSubscription,
         subscription_amount: formData.subscriptionAmount,
-        exam_preparation: formData.examPreparation,
+        exam_preparation_device: formData.examPreparationDevice,
         podcast_experience: formData.podcastExperience,
-        audio_usage: formData.audioUsage,
         podcast_helpful: formData.podcastHelpful,
         voices_feedback: formData.voicesFeedback,
         only_male_or_female_voices: formData.onlyMaleOrFemaleVoices,
@@ -67,11 +69,14 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         usedPlatforms: '',
         hadPaidSubscription: '',
         subscriptionAmount: '',
-        examPreparation: '',
+        examPreparationDevice: '',
+        podcastExamPrepPossible: '',
+        podcastExamPrepWhyNot: '',
         podcastExperience: '',
-        audioUsage: '',
         podcastHelpful: '',
+        podcastHelpfulWhyNot: '',
         voicesFeedback: '',
+        voicesFeedbackWhyNot: '',
         onlyMaleOrFemaleVoices: '',
         whyNotVoices: '',
         genderImportance: '5',
@@ -140,41 +145,105 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
             </select>
           </div>
         )}
-        {/* 4. Offene Frage */}
+        {/* 4. Neue Frage: Computer/Handy zur Prüfungsvorbereitung? */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
-            Wie bereitest du dich normalerweise auf Prüfungen vor?
+            Bereitest du dich mit deinem Computer oder Handy auf Prüfungen vor?
           </label>
-          <textarea value={formData.examPreparation} onChange={e => setFormData({ ...formData, examPreparation: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          <div className="space-x-6">
+            <label className="inline-flex items-center">
+              <input type="radio" name="examPreparationDevice" value="ja" checked={formData.examPreparationDevice === 'ja'} onChange={e => setFormData({ ...formData, examPreparationDevice: e.target.value, podcastExamPrepPossible: '', podcastExamPrepWhyNot: '' })} className="form-radio text-primary" required />
+              <span className="ml-2">Ja</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input type="radio" name="examPreparationDevice" value="nein" checked={formData.examPreparationDevice === 'nein'} onChange={e => setFormData({ ...formData, examPreparationDevice: e.target.value, podcastExamPrepPossible: '', podcastExamPrepWhyNot: '' })} className="form-radio text-primary" />
+              <span className="ml-2">Nein</span>
+            </label>
+          </div>
         </div>
-        {/* 5. Offene Frage */}
+        {/* 4b. Folgefrage: Podcasts zur Prüfungsvorbereitung? */}
+        {formData.examPreparationDevice === 'ja' && (
+          <div>
+            <label className="block text-base font-medium text-gray-800 mb-2">
+              Könntest du dir vorstellen, dich mit Podcasts auf eine Prüfung vorzubereiten?
+            </label>
+            <div className="space-x-6">
+              <label className="inline-flex items-center">
+                <input type="radio" name="podcastExamPrepPossible" value="ja" checked={formData.podcastExamPrepPossible === 'ja'} onChange={e => setFormData({ ...formData, podcastExamPrepPossible: e.target.value, podcastExamPrepWhyNot: '' })} className="form-radio text-primary" required />
+                <span className="ml-2">Ja</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input type="radio" name="podcastExamPrepPossible" value="nein" checked={formData.podcastExamPrepPossible === 'nein'} onChange={e => setFormData({ ...formData, podcastExamPrepPossible: e.target.value })} className="form-radio text-primary" />
+                <span className="ml-2">Nein</span>
+              </label>
+            </div>
+          </div>
+        )}
+        {/* 4c. Folgefrage: Warum nicht? */}
+        {formData.examPreparationDevice === 'ja' && formData.podcastExamPrepPossible === 'nein' && (
+          <div>
+            <label className="block text-base font-medium text-gray-800 mb-2">
+              Warum nicht?
+            </label>
+            <textarea value={formData.podcastExamPrepWhyNot} onChange={e => setFormData({ ...formData, podcastExamPrepWhyNot: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          </div>
+        )}
+        {/* 5. Podcast-Erfahrung bleibt */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
             Hast du schon einmal mit Podcasts oder Audioinhalten für die Uni gelernt? Wenn ja: wie war das für dich?
           </label>
           <textarea value={formData.podcastExperience} onChange={e => setFormData({ ...formData, podcastExperience: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
         </div>
-        {/* 6. Offene Frage */}
+        {/* 6. ENTFÄLLT */}
+        {/* 7. Denk an dein letztes Prüfungsfach: Ja/Nein, Folgefrage bei Nein */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
-            Wie oft würdest du realistisch gesehen Inhalte in Audioform nutzen, wenn sie auf deinen Kurs abgestimmt wären?
+            Denk an dein letztes großes Prüfungsfach: Wäre ein kursspezifischer Lernpodcast für dich hilfreich gewesen?
           </label>
-          <textarea value={formData.audioUsage} onChange={e => setFormData({ ...formData, audioUsage: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          <div className="space-x-6">
+            <label className="inline-flex items-center">
+              <input type="radio" name="podcastHelpful" value="ja" checked={formData.podcastHelpful === 'ja'} onChange={e => setFormData({ ...formData, podcastHelpful: e.target.value, podcastHelpfulWhyNot: '' })} className="form-radio text-primary" required />
+              <span className="ml-2">Ja</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input type="radio" name="podcastHelpful" value="nein" checked={formData.podcastHelpful === 'nein'} onChange={e => setFormData({ ...formData, podcastHelpful: e.target.value })} className="form-radio text-primary" />
+              <span className="ml-2">Nein</span>
+            </label>
+          </div>
         </div>
-        {/* 7. Offene Frage */}
+        {formData.podcastHelpful === 'nein' && (
+          <div>
+            <label className="block text-base font-medium text-gray-800 mb-2">
+              Warum nicht?
+            </label>
+            <textarea value={formData.podcastHelpfulWhyNot} onChange={e => setFormData({ ...formData, podcastHelpfulWhyNot: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          </div>
+        )}
+        {/* 8. Stimmen: Ja/Nein, Folgefrage bei Nein */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
-            Denk an dein letztes großes Prüfungsfach: Wäre ein kursspezifischer Lernpodcast für dich hilfreich gewesen? Warum oder warum nicht?
+            Gefallen dir die beiden Stimmen (Thomas und Lisa)?
           </label>
-          <textarea value={formData.podcastHelpful} onChange={e => setFormData({ ...formData, podcastHelpful: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          <div className="space-x-6">
+            <label className="inline-flex items-center">
+              <input type="radio" name="voicesFeedback" value="ja" checked={formData.voicesFeedback === 'ja'} onChange={e => setFormData({ ...formData, voicesFeedback: e.target.value, voicesFeedbackWhyNot: '' })} className="form-radio text-primary" required />
+              <span className="ml-2">Ja</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input type="radio" name="voicesFeedback" value="nein" checked={formData.voicesFeedback === 'nein'} onChange={e => setFormData({ ...formData, voicesFeedback: e.target.value })} className="form-radio text-primary" />
+              <span className="ml-2">Nein</span>
+            </label>
+          </div>
         </div>
-        {/* 8. Offene Frage */}
-        <div>
-          <label className="block text-base font-medium text-gray-800 mb-2">
-            Und nun zu unseren Podcasts: Wie gefallen dir die beiden Stimmen? (Thomas und Lisa)
-          </label>
-          <textarea value={formData.voicesFeedback} onChange={e => setFormData({ ...formData, voicesFeedback: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
-        </div>
+        {formData.voicesFeedback === 'nein' && (
+          <div>
+            <label className="block text-base font-medium text-gray-800 mb-2">
+              Warum nicht?
+            </label>
+            <textarea value={formData.voicesFeedbackWhyNot} onChange={e => setFormData({ ...formData, voicesFeedbackWhyNot: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Antwort ..." required />
+          </div>
+        )}
         {/* 9. Ja/Nein */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
