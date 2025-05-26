@@ -12,6 +12,9 @@ interface SurveyFormProps {
 
 export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle }) => {
   const [formData, setFormData] = useState({
+    age: '',
+    isStudent: '',
+    university: '',
     usedPlatforms: '',
     hadPaidSubscription: '',
     subscriptionAmount: '',
@@ -42,6 +45,9 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         to_email: 'IHRE_EMAIL@example.com',
         course_id: courseId,
         course_title: courseTitle,
+        age: formData.age,
+        is_student: formData.isStudent,
+        university: formData.university,
         used_platforms: formData.usedPlatforms,
         had_paid_subscription: formData.hadPaidSubscription,
         subscription_amount: formData.subscriptionAmount,
@@ -68,6 +74,9 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
       );
       setSubmitStatus('success');
       setFormData({
+        age: '',
+        isStudent: '',
+        university: '',
         usedPlatforms: '',
         hadPaidSubscription: '',
         subscriptionAmount: '',
@@ -98,6 +107,43 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
     <Card className="mt-8 p-6 max-w-2xl mx-auto shadow-lg">
       <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Umfrage</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* NEU: Wie alt bist du? */}
+        <div>
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Wie alt bist du?
+          </label>
+          <select value={formData.age} onChange={e => setFormData({ ...formData, age: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required>
+            <option value="">Bitte wählen</option>
+            {[...Array(99)].map((_, i) => (
+              <option key={i+1} value={i+1}>{i+1}</option>
+            ))}
+          </select>
+        </div>
+        {/* NEU: Studierst du derzeit an einer Hochschule? */}
+        <div>
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Studierst du derzeit an einer Hochschule?
+          </label>
+          <div className="space-x-6">
+            <label className="inline-flex items-center">
+              <input type="radio" name="isStudent" value="ja" checked={formData.isStudent === 'ja'} onChange={e => setFormData({ ...formData, isStudent: e.target.value, university: '' })} className="form-radio text-primary" required />
+              <span className="ml-2">Ja</span>
+            </label>
+            <label className="inline-flex items-center">
+              <input type="radio" name="isStudent" value="nein" checked={formData.isStudent === 'nein'} onChange={e => setFormData({ ...formData, isStudent: e.target.value, university: '' })} className="form-radio text-primary" />
+              <span className="ml-2">Nein</span>
+            </label>
+          </div>
+        </div>
+        {/* NEU: Folgefrage Universität */}
+        {formData.isStudent === 'ja' && (
+          <div>
+            <label className="block text-base font-medium text-gray-800 mb-2">
+              An welcher Universität studierst du?
+            </label>
+            <input type="text" value={formData.university} onChange={e => setFormData({ ...formData, university: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" placeholder="Name der Universität" required />
+          </div>
+        )}
         {/* 1. Online-Lernplattformen genutzt? */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
