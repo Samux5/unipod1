@@ -31,7 +31,8 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
     podcastExamPrep: '5',
     paidSubscriptionPossible: '5',
     willingToPay: '',
-    email: ''
+    email: '',
+    notes: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
@@ -64,7 +65,8 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         podcast_exam_prep: formData.podcastExamPrep,
         paid_subscription_possible: formData.paidSubscriptionPossible,
         willing_to_pay: formData.willingToPay,
-        user_email: formData.email
+        user_email: formData.email,
+        notes: formData.notes
       };
       await emailjs.send(
         'service_spfyr0e',
@@ -93,7 +95,8 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         podcastExamPrep: '5',
         paidSubscriptionPossible: '5',
         willingToPay: '',
-        email: ''
+        email: '',
+        notes: ''
       });
     } catch (error) {
       console.error('Fehler beim Senden der Umfrage:', error);
@@ -361,6 +364,13 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
             Deine E-Mail (optional)
           </label>
           <input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" placeholder="email@example.com" />
+        </div>
+        {/* Anmerkungsfeld */}
+        <div>
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Anmerkungen, Verbesserungsvorschläge, Wünsche (optional)
+          </label>
+          <textarea value={formData.notes} onChange={e => setFormData({ ...formData, notes: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" rows={2} placeholder="Deine Anmerkungen ..." />
         </div>
         {submitStatus === 'success' && (
           <div className="p-2 bg-green-50 text-green-700 rounded-md text-sm text-center">
