@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { useState } from 'react';
 import { AudioPlayer } from '@/components/audio/AudioPlayer';
+import { SurveyForm } from '@/components/survey/SurveyForm';
 
 const modules = [
   {
@@ -84,6 +85,10 @@ export default function RechtswissenschaftPage() {
           </div>
         )}
       </div>
+      <SurveyForm 
+        courseId="rechtswissenschaft"
+        courseTitle="Einführung in die Rechtswissenschaften"
+      />
     </div>
   );
 } 

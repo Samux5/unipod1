@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { useState } from 'react';
 import { AudioPlayer } from '@/components/audio/AudioPlayer';
+import { SurveyForm } from '@/components/survey/SurveyForm';
 
 const modules = [
   {
@@ -90,6 +91,10 @@ export default function VWLPage() {
           </div>
         )}
       </div>
+      <SurveyForm 
+        courseId="vwl"
+        courseTitle="Volkswirtschaftslehre und Zukunftsfähiges Wirtschaften"
+      />
     </div>
   );
 } 

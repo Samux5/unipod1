@@ -31,6 +31,7 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
     podcastExamPrep: '5',
     paidSubscriptionPossible: '5',
     willingToPay: '',
+    podcastLength: '',
     email: '',
     notes: ''
   });
@@ -65,6 +66,7 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         podcast_exam_prep: formData.podcastExamPrep,
         paid_subscription_possible: formData.paidSubscriptionPossible,
         willing_to_pay: formData.willingToPay,
+        podcast_length: formData.podcastLength,
         user_email: formData.email,
         notes: formData.notes
       };
@@ -95,6 +97,7 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
         podcastExamPrep: '5',
         paidSubscriptionPossible: '5',
         willingToPay: '',
+        podcastLength: '',
         email: '',
         notes: ''
       });
@@ -358,6 +361,18 @@ export const SurveyForm: React.FC<SurveyFormProps> = ({ courseId, courseTitle })
             </select>
           </div>
         )}
+        {/* NEU: Wie lange sollten die Podcasts ungefähr sein? */}
+        <div>
+          <label className="block text-base font-medium text-gray-800 mb-2">
+            Wie lange sollten die Podcasts ungefähr sein?
+          </label>
+          <select value={formData.podcastLength} onChange={e => setFormData({ ...formData, podcastLength: e.target.value })} className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm" required>
+            <option value="">Bitte wählen</option>
+            <option value="10-20 Minuten">10-20 Minuten</option>
+            <option value="20-40 Minuten">20-40 Minuten</option>
+            <option value=">40 Minuten">Länger als 40 Minuten</option>
+          </select>
+        </div>
         {/* Kontaktfeld */}
         <div>
           <label className="block text-base font-medium text-gray-800 mb-2">
